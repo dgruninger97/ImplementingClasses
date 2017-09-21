@@ -34,17 +34,22 @@ class Point(object):
         self.startx = x
         self.starty = y
         self.moves = 0
-        
+        self.total = 0
+
     def __repr__(self):
         return 'Point' + '(' + str(self.x) + ',' + str(self.y) + ')'
     def clone(self):
         return Point(self.x, self.y)
     def move_to(self, newx, newy):
+        point = Point(newx, newy)
+        self.total = self.total + self.get_distance_from(point)
         self.x = newx
         self.y = newy
         self.moves += 1
         return Point(self.x, self.y)
     def move_by(self, dx, dy):
+        point = Point(self.x + dx ,self.y + dy )
+        self.total = self.total + self.get_distance_from(point)
         self.x = self.x + dx
         self.y = self.y + dy
         self.moves += 1
@@ -58,7 +63,14 @@ class Point(object):
         distance = math.sqrt(((self.startx - self.x) ** 2) + (self.starty - self.y) ** 2)
         return distance
     def get_distance_traveled(self):
-
+        return self.total
+    def closer_to(self, p2, p3):
+        p2dist = self.get_distance_from(p2)
+        p3dist = self.get_distance_from(p3)
+        if (p2dist <= p3dist):
+            return p2
+        else:
+            return p3
 # ----------------------------------------------------------------------
 # DONE: 2. With your instructor, READ THE INSTRUCTIONS
 #   in file  m0_INSTRUCTIONS.txt, asking questions as needed.
@@ -884,7 +896,7 @@ def test_get_distance_traveled():
         print('Actual:', p4.get_distance_traveled())
     """
     # ------------------------------------------------------------------
-    # TODO: 11.  Follow the same instructions as in TODO 3 above,
+    # DONE: 11.  Follow the same instructions as in DONE 3 above,
     #    but for the  GET_DISTANCE_TRAVELED  method specified above.
     # ------------------------------------------------------------------
     print()
@@ -978,6 +990,34 @@ def test_closer_to():
     print('Testing the   CLOSER_TO   method of the Point class.')
     print('-----------------------------------------------------------')
 
+
+    p1 = Point(10, 20)
+    p2 = Point(15, 20)
+    p3 = Point(14, 24)
+
+    print()
+    print('Expected:', p2)
+    print('Actual:  ', p1.closer_to(p2, p3))
+    print('Expected:', p2)
+    print('Actual:  ', p1.closer_to(p3, p2))
+
+    print()
+    print('Expected:', p1)
+    print('Actual:  ', p1.closer_to(p1, p3))
+    print('Expected:', p2)
+    print('Actual:  ', p2.closer_to(p3, p2))
+    print('Expected:', p3)
+    print('Actual:  ', p3.closer_to(p3, p3))
+
+    print()
+    p4 = p1.clone()
+    p5 = p1.clone()
+    print('Expected:', p4)
+    print('Actual:  ', p1.closer_to(p4, p5))
+    print('Expected: True')
+    print('Actual:  ', p1.closer_to(p4, p5) is p4)
+    print('Expected: False')
+    print('Actual:  ', p1.closer_to(p4, p5) is p5)
 
 def test_halfway_to():
     """
