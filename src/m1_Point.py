@@ -71,6 +71,11 @@ class Point(object):
             return p2
         else:
             return p3
+    def halfway_to(self, p2):
+        halfx = ((self.x + p2.x) / 2)
+        halfy = ((self.y + p2.y) / 2)
+        point = Point(halfx, halfy)
+        return point
 # ----------------------------------------------------------------------
 # DONE: 2. With your instructor, READ THE INSTRUCTIONS
 #   in file  m0_INSTRUCTIONS.txt, asking questions as needed.
@@ -982,7 +987,7 @@ def test_closer_to():
         print('Actual:  ', p1.closer_to(p4, p5) is p5)
     """
     # ------------------------------------------------------------------
-    # TODO: 12.  Follow the same instructions as in TODO 3 above,
+    # DONE: 12.  Follow the same instructions as in DONE 3 above,
     #    but for the  CLOSER_TO  method specified above.
     # ------------------------------------------------------------------
     print()
@@ -1066,7 +1071,7 @@ def test_halfway_to():
 
     """
     # ------------------------------------------------------------------
-    # TODO: 13.  Follow the same instructions as in TODO 3 above,
+    # DONE: 13.  Follow the same instructions as in DONE 3 above,
     #    but for the  HALFWAY_TO  method specified above.
     # ------------------------------------------------------------------
     print()
@@ -1075,6 +1080,31 @@ def test_halfway_to():
     print('-----------------------------------------------------------')
 
 
+    p1 = Point(10, 20)
+    p2 = Point(30, 100)
+
+    print()
+    print('Should be: Point(20.0, 60.0)')
+    print('Actual is:', p1.halfway_to(p2))
+    print('Should be: Point(20.0, 60.0)')
+    print('Actual is:', p2.halfway_to(p1))
+
+    print()
+    print('Should be: Point(10.0, 20.0)')
+    print('Actual is:', p1.halfway_to(p1))
+
+    p3 = Point(-10, 20)
+    p4 = Point(30, -100)
+
+    print()
+    print('Should be: Point(10.0, -40.0)')
+    print('Actual is:', p3.halfway_to(p4))
+    print('Should be: Point(10.0, -40.0)')
+    print('Actual is:', p3.halfway_to(p4))
+
+    print()
+    print('Should be: Point(-10.0, 20.0)')
+    print('Actual is:', p3.halfway_to(p3))
 # ----------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
 # ----------------------------------------------------------------------
